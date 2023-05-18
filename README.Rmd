@@ -1,0 +1,92 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+# subsamplerr
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+R package for subsampling genomic data based on epidemiological time series data.
+
+## Installation
+
+You can install the development version of subsamplerr from GitHub with:
+
+``` r
+devtools::install_github("leke-lyu/subsamplerr")
+```
+
+## Example
+
+Inspect the genome metadata file:
+
+```{r, message = FALSE}
+library(subsamplerr)
+head(texasSeqMeta)
+```
+
+Count the number of genome samples by week and location:
+
+```{r}
+library(magrittr)
+library(aweek)
+library(lubridate)
+library(dplyr)
+
+texasSeqMeta$epiweek <- paste0((texasSeqMeta$date %>% as.Date() %>% epiyear()), "_", (texasSeqMeta$date %>% as.Date() %>% epiweek()))
+texasSeqCount <- texasSeqMeta %>%
+  dplyr::group_by(location, epiweek) %>% 
+  summarise(total_count=n(), .groups = 'drop') %>%
+  as.data.frame()
+MetroAreas <- texasSeqCount$location %>% unique() %>% sort()
+EpiweekS <- texasSeqCount$epiweek %>% unique() %>% sort()
+texasSeq <- matrix(0, length(MetroAreas), length(EpiweekS))
+rownames(texasSeq) <- MetroAreas
+colnames(texasSeq) <- EpiweekS
+for (i in 1:nrow(texasSeqCount)) {
+  texasSeq[texasSeqCount[i, "location"] == MetroAreas, texasSeqCount[i, "epiweek"] == EpiweekS] <- texasSeqCount[i, "total_count"]
+}
+```
+
+Integrate daily count of case data into weekly count:
+
+```{r}
+EpiweekC <- paste0((colnames(texasCase) %>% as.Date() %>% epiyear()), "_", (colnames(texasCase) %>% as.Date() %>% epiweek()))
+colnames(texasCase) <- EpiweekC
+texasCase <- t(rowsum(t(texasCase), colnames(texasCase)))
+texasCase <- texasCase[rownames(texasSeq), colnames(texasSeq)]
+```
+
+Inspect the sampling heterogeneity of the Texas dataset:
+
+```{r dpi=600, fig.width = 10, fig.height= 6}
+plotSequencingPercentage(texasSeq, texasCase)
+```
+
+Generate sampled dataset with baseline equals 0.006
+
+```{r}
+texasSample <- expectedSampleMatrix(0.006, texasSeq, texasCase)
+id <- proportionalSampling(texasSample, texasSeqMeta)
+```
+
+Inspect the sampling heterogeneity of the sampled dataset:
+
+```{r dpi=600, fig.width = 10, fig.height= 6}
+plotSequencingPercentage(texasSample, texasCase)
+```

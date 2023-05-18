@@ -1,0 +1,6 @@
+"0","texasSample <- expectedSampleMatrix(0.006, texasSeq, texasCase)"
+"0","id <- proportionalSampling(texasSample, texasSeqMeta)"
+"1","[1]"
+"1"," ""Given the basline equals 0.006, 5899 genomes are sampled."""
+"1","
+"

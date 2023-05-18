@@ -1,0 +1,4 @@
+"0","EpiweekC <- paste0((colnames(texasCase) %>% as.Date() %>% epiyear()), ""_"", (colnames(texasCase) %>% as.Date() %>% epiweek()))"
+"0","colnames(texasCase) <- EpiweekC"
+"0","texasCase <- t(rowsum(t(texasCase), colnames(texasCase)))"
+"0","texasCase <- texasCase[rownames(texasSeq), colnames(texasSeq)]"
