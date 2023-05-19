@@ -43,7 +43,7 @@ library(dplyr)
 
 texasSeqMeta$epiweek <- paste0((texasSeqMeta$date %>% as.Date() %>% epiyear()), "_", (texasSeqMeta$date %>% as.Date() %>% epiweek()))
 texasSeqCount <- texasSeqMeta %>%
-  dplyr::group_by(location, epiweek) %>% 
+  group_by(location, epiweek) %>% 
   summarise(total_count=n(), .groups = 'drop') %>%
   as.data.frame()
 MetroAreas <- texasSeqCount$location %>% unique() %>% sort()
