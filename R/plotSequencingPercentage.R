@@ -1,11 +1,9 @@
 #' This function plots the sequencing percentage.
 #' @importFrom magrittr %>%
 #' @importFrom magrittr %<>%
+#' @importFrom aweek get_date
+#' @importFrom tidyr gather
 #' @import ggplot2
-#' @import lubridate
-#' @import aweek
-#' @import tidyr
-#'
 #' @param seqM matrix
 #' @param caseM matrix
 #' @param ... further arguments passed to or from other methods
@@ -14,12 +12,14 @@
 #' @export
 
 plotSequencingPercentage <- function(seqM, caseM, ...){
-  ratio <- seqM/caseM
+  colN <- intersect(colnames(caseM), colnames(seqM)) %>% sort()
+  rowN <- intersect(rownames(caseM), rownames(seqM)) %>% sort()
+  ratio <- seqM[rowN, colN]/caseM[rowN, colN]
   ratio %<>% t() %>% as.data.frame
   year <- row.names(ratio) %>% substr(., 1, 4)
   week <- row.names(ratio) %>% substr(., 6, 7)
-  ratio$epiweek <- get_date(week, year)
-  ratio %>% gather(key = "variable", value = "value", -epiweek) %>%
+  ratio$epiweek <- aweek::get_date(week, year)
+  ratio %>% tidyr::gather(key = "variable", value = "value", -epiweek) %>%
     ggplot(., aes(x = epiweek, y = value)) +
     scale_x_date(date_breaks="2 week", date_labels = "%Y-%U") +
     geom_boxplot(aes(group = epiweek), fill = "white", colour = "black", outlier.shape = NA) +

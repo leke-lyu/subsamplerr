@@ -19,50 +19,14 @@ devtools::install_github("leke-lyu/subsamplerr")
 
 ## Example
 
-Inspect the genome metadata file:
-
-``` r
-library(subsamplerr)
-head(texasSeqMeta)
-#>    gisaid_epi_isl       date          location
-#> 1 EPI_ISL_5317623 2021-09-13 Dallas-Fort Worth
-#> 2 EPI_ISL_5320586 2021-09-24           Houston
-#> 3 EPI_ISL_5320589 2021-09-24           Houston
-#> 4 EPI_ISL_5320597 2021-09-24           Houston
-#> 5 EPI_ISL_5320591 2021-09-24           Houston
-#> 6 EPI_ISL_5320595 2021-09-24           Houston
-```
-
-Count the number of genome samples by week and location:
-
-``` r
-library(magrittr)
-library(aweek)
-library(lubridate)
-library(dplyr)
-
-texasSeqMeta$epiweek <- paste0((texasSeqMeta$date %>% as.Date() %>% epiyear()), "_", (texasSeqMeta$date %>% as.Date() %>% epiweek()))
-texasSeqCount <- texasSeqMeta %>%
-  group_by(location, epiweek) %>% 
-  summarise(total_count=n(), .groups = 'drop') %>%
-  as.data.frame()
-MetroAreas <- texasSeqCount$location %>% unique() %>% sort()
-EpiweekS <- texasSeqCount$epiweek %>% unique() %>% sort()
-texasSeq <- matrix(0, length(MetroAreas), length(EpiweekS))
-rownames(texasSeq) <- MetroAreas
-colnames(texasSeq) <- EpiweekS
-for (i in 1:nrow(texasSeqCount)) {
-  texasSeq[texasSeqCount[i, "location"] == MetroAreas, texasSeqCount[i, "epiweek"] == EpiweekS] <- texasSeqCount[i, "total_count"]
-}
-```
-
+Count the number of genome samples by Epi-Week and location, and
 Integrate daily count of case data into weekly count:
 
 ``` r
-EpiweekC <- paste0((colnames(texasCase) %>% as.Date() %>% epiyear()), "_", (colnames(texasCase) %>% as.Date() %>% epiweek()))
-colnames(texasCase) <- EpiweekC
-texasCase <- t(rowsum(t(texasCase), colnames(texasCase)))
-texasCase <- texasCase[rownames(texasSeq), colnames(texasSeq)]
+library(subsamplerr)
+
+texasSeq <- texasSeqMeta %>% metaTableToMatrix(., "location", "date") %>% exactDateToEpiweek(.)
+texasCase %<>% exactDateToEpiweek(.)
 ```
 
 Inspect the sampling heterogeneity of the Texas dataset:
@@ -71,7 +35,7 @@ Inspect the sampling heterogeneity of the Texas dataset:
 plotSequencingPercentage(texasSeq, texasCase)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 Generate sampled dataset with baseline equals 0.006
 
@@ -106,4 +70,4 @@ Inspect the sampling heterogeneity of the sampled dataset:
 plotSequencingPercentage(texasSample, texasCase)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />

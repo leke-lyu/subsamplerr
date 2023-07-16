@@ -1,5 +1,7 @@
 #' This function samples and returns the genome ids as a vector.
-#'
+#' @importFrom magrittr %>%
+#' @importFrom lubridate epiyear
+#' @importFrom lubridate epiweek
 #' @param sampleM matrix
 #' @param seqMeta dataframe
 #' @param ... further arguments passed to or from other methods
@@ -9,6 +11,7 @@
 
 proportionalSampling <- function(sampleM, seqMeta, ...){
   samples <- vector()
+  seqMeta$epiweek <- paste0((seqMeta$date %>% as.Date() %>% lubridate::epiyear()), "_", (seqMeta$date %>% as.Date() %>% lubridate::epiweek()))
   for(i in 1:nrow(sampleM)){
     for(j in 1:ncol(sampleM)){
       samples <- c(samples, sample(seqMeta[seqMeta$location == rownames(sampleM)[i] & seqMeta$epiweek == colnames(sampleM)[j], 1], sampleM[i,j], replace = FALSE))
