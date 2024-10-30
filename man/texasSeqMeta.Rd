@@ -3,7 +3,7 @@
 \docType{data}
 \name{texasSeqMeta}
 \alias{texasSeqMeta}
-\title{The metadata of SARS-CoV-2 genome samples}
+\title{Metadata for SARS-CoV-2 Delta variant genome samples collected from Texas}
 \format{
 \subsection{\code{texasSeqMeta}is a data frame with 24593 rows and 3 columns:}{
 
@@ -18,6 +18,6 @@
 texasSeqMeta
 }
 \description{
-The metadata of SARS-CoV-2 genome samples
+Metadata for SARS-CoV-2 Delta variant genome samples collected from Texas
 }
 \keyword{datasets}

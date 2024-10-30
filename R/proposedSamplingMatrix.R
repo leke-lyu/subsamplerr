@@ -1,4 +1,4 @@
-#' This function calculates and returns the expected number of genome samples by Epiweek and location, given a baseline.
+#' This function calculates and returns the expected number of genome samples per epidemiological week and location based on a given baseline.
 #' @importFrom magrittr %>%
 #' @param baseline numeric
 #' @param seqM matrix
@@ -8,7 +8,7 @@
 #' @return matrix
 #' @export
 
-expectedSampleMatrix <- function(baseline, seqM, caseM, ...){
+proposedSamplingMatrix <- function(baseline, seqM, caseM, ...){
   colN <- intersect(colnames(caseM), colnames(seqM)) %>% sort()
   rowN <- intersect(rownames(caseM), rownames(seqM)) %>% sort()
   sampleM <- matrix(0, length(rowN), length(colN))

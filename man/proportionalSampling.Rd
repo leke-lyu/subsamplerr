@@ -2,7 +2,7 @@
 % Please edit documentation in R/proportionalSampling.R
 \name{proportionalSampling}
 \alias{proportionalSampling}
-\title{This function samples and returns the genome ids as a vector.}
+\title{This function performs proportional sampling and returns the genome IDs as a vector.}
 \usage{
 proportionalSampling(sampleM, seqMeta, ...)
 }
@@ -17,5 +17,5 @@ proportionalSampling(sampleM, seqMeta, ...)
 vector
 }
 \description{
-This function samples and returns the genome ids as a vector.
+This function performs proportional sampling and returns the genome IDs as a vector.
 }

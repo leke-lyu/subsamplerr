@@ -2,7 +2,7 @@
 % Please edit documentation in R/metaTableToMatrix.R
 \name{metaTableToMatrix}
 \alias{metaTableToMatrix}
-\title{This function transforms the metadata, which is in the form of a data frame, into a matrix.}
+\title{This function converts metadata from a data frame format into a matrix format.}
 \usage{
 metaTableToMatrix(texasSeqMeta, columnNameForLocation, columnNameForDate, ...)
 }
@@ -19,5 +19,5 @@ metaTableToMatrix(texasSeqMeta, columnNameForLocation, columnNameForDate, ...)
 matrix
 }
 \description{
-This function transforms the metadata, which is in the form of a data frame, into a matrix.
+This function converts metadata from a data frame format into a matrix format.
 }

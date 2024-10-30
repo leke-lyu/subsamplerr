@@ -1,4 +1,4 @@
-#' This function samples and returns the genome ids as a vector.
+#' This function performs proportional sampling and returns the genome IDs as a vector.
 #' @importFrom magrittr %>%
 #' @importFrom lubridate epiyear
 #' @importFrom lubridate epiweek

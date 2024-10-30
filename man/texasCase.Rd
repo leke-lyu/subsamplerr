@@ -3,12 +3,12 @@
 \docType{data}
 \name{texasCase}
 \alias{texasCase}
-\title{SARS-CoV-2 Epi trends in TX}
+\title{Daily case counts of SARS-CoV-2 by subregion in Texas}
 \format{
 \subsection{\code{texasCase} is a matrix with 26 rows and 365 columns:}{
 
 rownames are Metro Areas in TX
-colnames are date
+colnames are date (YYYY-MM-DD)
 }
 }
 \source{
@@ -18,6 +18,6 @@ colnames are date
 texasCase
 }
 \description{
-SARS-CoV-2 Epi trends in TX
+Daily case counts of SARS-CoV-2 by subregion in Texas
 }
 \keyword{datasets}

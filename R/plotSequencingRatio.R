@@ -1,4 +1,4 @@
-#' This function plots the sequencing percentage.
+#' This function plots the sequencing ratio.
 #' @importFrom magrittr %>%
 #' @importFrom magrittr %<>%
 #' @importFrom aweek get_date
@@ -11,7 +11,7 @@
 #' @return plot
 #' @export
 
-plotSequencingPercentage <- function(seqM, caseM, ...){
+plotSequencingRatio <- function(seqM, caseM, ...){
   colN <- intersect(colnames(caseM), colnames(seqM)) %>% sort()
   rowN <- intersect(rownames(caseM), rownames(seqM)) %>% sort()
   ratio <- seqM[rowN, colN]/caseM[rowN, colN]

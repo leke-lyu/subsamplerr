@@ -1,4 +1,4 @@
-#' This function transforms the metadata, which is in the form of a data frame, into a matrix.
+#' This function converts metadata from a data frame format into a matrix format.
 #' @importFrom magrittr %>%
 #' @importFrom dplyr group_by_at
 #' @importFrom dplyr summarise
