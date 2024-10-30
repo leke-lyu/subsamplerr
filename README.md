@@ -6,8 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-R package for subsampling genomic data based on epidemiological time
-series data.
+Following the approach of Anderson F. Brito, we developed R scripts, later consolidated into an R package called Subsamplerr. This package processes case count tables and genome metadata, enabling visual exploration of sampling heterogeneity and the implementation of proportional sampling schemes.
 
 ## Installation
 
