@@ -6,7 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-Following the approach of Anderson F. Brito, we developed R scripts, later consolidated into an R package. This package processes case count tables and genome metadata, enabling visual exploration of sampling heterogeneity and the implementation of proportional sampling schemes.
+R package for subsampling genomic data based on epidemiological time
+series data.
 
 ## Installation
 
@@ -24,14 +25,14 @@ Integrate daily count of case data into weekly count:
 ``` r
 library(subsamplerr)
 
-texasSeq <- texasSeqMeta %>% metaTableToMatrix(., "location", "date") %>% exactDateToEpiweek(.)
-texasCase %<>% exactDateToEpiweek(.)
+texasSeq <- texasSeqMeta %>% metaTableToMatrix(., "location", "date") %>% dateToEpiweek(.)
+texasCase %<>% dateToEpiweek(.)
 ```
 
 Inspect the sampling heterogeneity of the Texas dataset:
 
 ``` r
-plotSequencingPercentage(texasSeq, texasCase)
+plotSequencingRatio(texasSeq, texasCase)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
@@ -39,7 +40,7 @@ plotSequencingPercentage(texasSeq, texasCase)
 Generate sampled dataset with baseline equals 0.006
 
 ``` r
-texasSample <- expectedSampleMatrix(0.006, texasSeq, texasCase)
+texasSample <- proposedSamplingMatrix(0.006, texasSeq, texasCase)
 id <- proportionalSampling(texasSample, texasSeqMeta)
 #> [1] "Given the basline equals 0.006, 5899 genomes are sampled."
 #> .
@@ -66,7 +67,7 @@ id <- proportionalSampling(texasSample, texasSeqMeta)
 Inspect the sampling heterogeneity of the sampled dataset:
 
 ``` r
-plotSequencingPercentage(texasSample, texasCase)
+plotSequencingRatio(texasSample, texasCase)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />

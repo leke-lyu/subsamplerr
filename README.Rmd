@@ -49,25 +49,25 @@ Count the number of genome samples by Epi-Week and location, and Integrate daily
 ```{r, message = FALSE}
 library(subsamplerr)
 
-texasSeq <- texasSeqMeta %>% metaTableToMatrix(., "location", "date") %>% exactDateToEpiweek(.)
-texasCase %<>% exactDateToEpiweek(.)
+texasSeq <- texasSeqMeta %>% metaTableToMatrix(., "location", "date") %>% dateToEpiweek(.)
+texasCase %<>% dateToEpiweek(.)
 ```
 
 Inspect the sampling heterogeneity of the Texas dataset:
 
 ```{r dpi=600, fig.width = 10, fig.height= 6}
-plotSequencingPercentage(texasSeq, texasCase)
+plotSequencingRatio(texasSeq, texasCase)
 ```
 
 Generate sampled dataset with baseline equals 0.006
 
 ```{r}
-texasSample <- expectedSampleMatrix(0.006, texasSeq, texasCase)
+texasSample <- proposedSamplingMatrix(0.006, texasSeq, texasCase)
 id <- proportionalSampling(texasSample, texasSeqMeta)
 ```
 
 Inspect the sampling heterogeneity of the sampled dataset:
 
 ```{r dpi=600, fig.width = 10, fig.height= 6}
-plotSequencingPercentage(texasSample, texasCase)
+plotSequencingRatio(texasSample, texasCase)
 ```
