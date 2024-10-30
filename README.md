@@ -6,8 +6,12 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-R package for subsampling genomic data based on epidemiological time
-series data.
+Following the approach of [Anderson F.
+Brito](https://www.cell.com/cell/fulltext/S0092-8674(21)00434-7), we
+developed R scripts, later consolidated into an R package. This package
+processes case count tables and genome metadata, enabling visual
+exploration of sampling heterogeneity and the implementation of
+proportional sampling schemes.
 
 ## Installation
 
@@ -17,10 +21,39 @@ You can install the development version of subsamplerr from GitHub with:
 devtools::install_github("leke-lyu/subsamplerr")
 ```
 
-## Example
+## Workflow Overview
 
-Count the number of genome samples by Epi-Week and location, and
-Integrate daily count of case data into weekly count:
+### Input Data
+
+- **texasSeqMeta**: Metadata of genome samples in Texas by location and
+  date.
+- **texasCase**: Daily case counts in Texas.
+
+### Data Processing
+
+- **metaTableToMatrix**: Converts `texasSeqMeta` into a matrix format by
+  location and date.
+- **dateToEpiweek**: Aggregates both genome and case data from daily
+  counts to weekly counts.
+
+### Heterogeneity Analysis
+
+- **plotSequencingRatio**: Generates a visualization to inspect the
+  sampling heterogeneity in the Texas dataset.
+
+### Proportional Sampling
+
+- **proposedSamplingMatrix**: Creates a sampling matrix based on a
+  baseline ratio (0.006).
+- **proportionalSampling**: Applies the sampling matrix to select a
+  proportionate sample from `texasSeqMeta`.
+
+### Post-sampling Heterogeneity Analysis
+
+- **plotSequencingRatio**: Re-evaluates sampling heterogeneity in the
+  sampled dataset for comparison with the original dataset.
+
+## Example
 
 ``` r
 library(subsamplerr)
@@ -29,15 +62,11 @@ texasSeq <- texasSeqMeta %>% metaTableToMatrix(., "location", "date") %>% dateTo
 texasCase %<>% dateToEpiweek(.)
 ```
 
-Inspect the sampling heterogeneity of the Texas dataset:
-
 ``` r
 plotSequencingRatio(texasSeq, texasCase)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
-
-Generate sampled dataset with baseline equals 0.006
 
 ``` r
 texasSample <- proposedSamplingMatrix(0.006, texasSeq, texasCase)
@@ -63,8 +92,6 @@ id <- proportionalSampling(texasSample, texasSeqMeta)
 #>             Texarkana            San Angelo 
 #>                    15                    13
 ```
-
-Inspect the sampling heterogeneity of the sampled dataset:
 
 ``` r
 plotSequencingRatio(texasSample, texasCase)
