@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-Following the approach of Anderson F. Brito, we developed R scripts, later consolidated into an R package called Subsamplerr. This package processes case count tables and genome metadata, enabling visual exploration of sampling heterogeneity and the implementation of proportional sampling schemes.
+Following the approach of Anderson F. Brito, we developed R scripts, later consolidated into an R package. This package processes case count tables and genome metadata, enabling visual exploration of sampling heterogeneity and the implementation of proportional sampling schemes.
 
 ## Installation
 
