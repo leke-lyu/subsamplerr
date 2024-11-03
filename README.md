@@ -25,14 +25,13 @@ devtools::install_github("leke-lyu/subsamplerr")
 
 ### Input Data
 
-- **texasSeqMeta**: Metadata of genome samples in Texas by location and
+- `texasSeqMeta`: Metadata of genome samples in Texas by location and
   date.
-- **texasCase**: Daily case counts in Texas.
+- `texasCase`: Daily case counts in Texas.
 
 ### Data Processing
 
-- **metaTableToMatrix**: Converts `texasSeqMeta` into a matrix format by
-  location and date.
+- **metaTableToMatrix**: Converts `texasSeqMeta` into a matrix format.
 - **dateToEpiweek**: Aggregates both genome and case data from daily
   counts to weekly counts.
 
