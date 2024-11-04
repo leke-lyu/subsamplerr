@@ -97,3 +97,14 @@ plotSequencingRatio(texasSample, texasCase)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+## Contact and Citation
+
+For any questions, issues, or feedback, please reach out via
+\[<lekelyu@uga.edu>\].
+
+If you use R package, please cite the following papers:
+
+- \[<https://doi.org/10.1101/2023.12.28.23300535>\]
+
+- \[<https://doi.org/10.1016/j.cell.2021.03.061>\]
