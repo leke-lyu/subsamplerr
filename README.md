@@ -103,7 +103,7 @@ plotSequencingRatio(texasSample, texasCase)
 For any questions, issues, or feedback, please reach out via
 \[<lekelyu@uga.edu>\].
 
-If you use R package, please cite the following papers:
+If you use this R package, please cite the following papers:
 
 - \[<https://doi.org/10.1101/2023.12.28.23300535>\]
 
